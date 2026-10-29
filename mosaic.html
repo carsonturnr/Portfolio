@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en" data-accent="blue">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mosaic · Carson Turner</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="description" content="An AI creative strategist for Meta ads. It watches every ad, ties what's in it to results, and tells you what to make next.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Mosaic · Carson Turner">
+<meta property="og:description" content="An AI creative strategist for Meta ads. It watches every ad, ties what's in it to results, and tells you what to make next.">
+<meta property="og:url" content="https://carsonturner.me/mosaic.html">
+<meta property="og:image" content="https://carsonturner.me/img/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav class="nav">
+  <a href="index.html#top">home</a>
+  <a href="index.html#work" class="on">work</a>
+  <a href="index.html#clients">clients</a>
+  <a href="resume.pdf">resume</a>
+</nav>
+
+<div class="cs">
+  <a href="index.html#work" class="back">← back</a>
+
+  <article>
+    <h1>Mosaic</h1>
+    <div class="date">in progress · 2026</div>
+    <p>An AI creative strategist for Meta ads. It watches every ad, ties what's in it to results, and tells you what to make next.</p>
+    <figure class="shot-img">
+      <img src="img/mosaic-landing.jpg" alt="Mosaic landing page" width="1291" height="673" loading="eager">
+    </figure>
+
+    <h2 id="problem">problem</h2>
+    <p>Brands run hundreds of ads and struggle to tell which hooks and formats actually drive results. Performance data is noisy, so small differences are easy to misread.</p>
+
+    <h2 id="build">what i built</h2>
+    <ul>
+      <li>Syncs ads and results from the Meta API.</li>
+      <li>Splits each video into scenes, transcripts and tags.</li>
+      <li>Ranks hooks and formats with statistical shrinkage.</li>
+      <li>Writes reports where every claim cites its ads.</li>
+    </ul>
+
+    <h2 id="how">how it works</h2>
+    <p>A multimodal pipeline feeds Postgres and pgvector. Claude agents query it to write reports. Evals run in CI.</p>
+    <figure class="shot-img">
+      <img src="img/mosaic-report.jpg" alt="A Mosaic strategist report with cited numbers" width="897" height="673" loading="lazy">
+      <figcaption>A generated report from the live demo. Every number is checked against the data.</figcaption>
+    </figure>
+
+    <h2 id="stack">stack</h2>
+    <p>React, FastAPI, Supabase, pgvector, Gemini, Claude, Modal, Langfuse.</p>
+  </article>
+
+  <aside class="toc">
+    <a class="visit" href="https://mosaicads.vercel.app">visit site ↗</a>
+    <a class="t" href="#problem">problem</a>
+    <a class="t" href="#build">what i built</a>
+    <a class="t" href="#how">how it works</a>
+    <a class="t" href="#stack">stack</a>
+  </aside>
+</div>
+
+<script>
+const toc = [...document.querySelectorAll('.toc a.t')];
+const heads = toc.map(a => document.querySelector(a.getAttribute('href')));
+const spy = () => {
+  let cur = 0;
+  heads.forEach((h, i) => { if (h.getBoundingClientRect().top < 200) cur = i; });
+  if (innerHeight + scrollY >= document.body.scrollHeight - 4) cur = heads.length - 1;
+  toc.forEach((a, i) => a.classList.toggle('on', i === cur));
+};
+addEventListener('scroll', spy, { passive: true }); spy();
+</script>
+</body>
+</html>

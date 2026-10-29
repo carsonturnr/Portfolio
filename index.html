@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en" data-accent="blue">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Carson Turner</title>
+<meta name="description" content="Carson Turner, software engineer in Oxford, Mississippi. AI agents, web and iOS apps.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Carson Turner">
+<meta property="og:description" content="Carson Turner, software engineer in Oxford, Mississippi. AI agents, web and iOS apps.">
+<meta property="og:url" content="https://carsonturner.me/">
+<meta property="og:image" content="https://carsonturner.me/img/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<canvas id="pond" aria-hidden="true"></canvas>
+
+<nav class="nav">
+  <a href="#top" data-s="top">home</a>
+  <a href="#work" data-s="work">work</a>
+  <a href="#clients" data-s="clients">clients</a>
+  <a href="resume.pdf">resume</a>
+</nav>
+<div class="counter" aria-hidden="true"><span id="fishCount">0</span></div>
+
+<header id="top" class="hero">
+  <div class="col" data-koi-avoid>
+    <h1>Hey, I'm Carson.</h1>
+    <p>Software Engineer @ <button class="ref" data-card="krastor">Krastor</button>, building AI agents and apps for small businesses.</p>
+    <p>Before that, <button class="ref" data-card="mccarren">McCarren Capital</button> and my own <button class="ref" data-card="swift">e-commerce company</button>.</p>
+    <p>Currently, building <button class="ref" data-card="mosaic">Mosaic</button> and running D1 track @ <button class="ref" data-card="olemiss">Ole Miss</button>.</p>
+    <p class="links"><a href="https://github.com/carsonturnr">github</a> / <a href="https://www.linkedin.com/in/carsonturner1/">linkedin</a> / <button class="copy" id="copy">email</button><span class="copied" id="copied">copied</span></p>
+  </div>
+  <a href="#work" class="down" aria-label="Scroll to work">↓</a>
+</header>
+
+<main class="col">
+  <section id="work">
+    <h2><i>01</i>work</h2>
+    <a class="row" href="mosaic.html">
+      <span class="name">Mosaic</span>
+      <span class="desc">AI creative strategist for Meta ads.</span>
+      <span class="meta">web · 2026</span>
+    </a>
+    <a class="row" href="stride-lab.html">
+      <span class="name">Stride Lab</span>
+      <span class="desc">Running-form analysis from phone video.</span>
+      <span class="meta">web · 2026</span>
+    </a>
+    <a class="row" href="rapha.html">
+      <span class="name">Rapha</span>
+      <span class="desc">Personalized devotional app for iOS.</span>
+      <span class="meta">iOS · 2024</span>
+    </a>
+  </section>
+
+  <section id="clients">
+    <h2><i>02</i>clients</h2>
+    <a class="row" href="sweet-haus.html">
+      <span class="name">Sweet-Haus</span>
+      <span class="desc">Cabin configurator with live pricing.</span>
+      <span class="meta">2026</span>
+    </a>
+    <a class="row" href="barkclad.html">
+      <span class="name">Barkclad</span>
+      <span class="desc">Website and operations platform.</span>
+      <span class="meta">2026</span>
+    </a>
+    <a class="row" href="appalachian.html">
+      <span class="name">Appalachian Adventure Co.</span>
+      <span class="desc">Website rebuild with automated MLS listings.</span>
+      <span class="meta">2026</span>
+    </a>
+  </section>
+
+  <footer class="foot">
+    <span id="clock">—</span>
+    <span class="foot-r"><a href="https://github.com/carsonturnr">github</a><a href="https://www.linkedin.com/in/carsonturner1/">linkedin</a><a href="resume.pdf">resume</a></span>
+  </footer>
+</main>
+
+<div class="pop" id="pop" role="dialog" hidden>
+  <div class="pop-top"><span class="pop-co"><span class="pop-logo" id="popLogo"></span><span id="popCo"></span></span><span id="popDate"></span></div>
+  <div class="pop-role" id="popRole"></div>
+  <div class="pop-desc" id="popDesc"></div>
+  <a class="pop-open" id="popLink" href="#">open site <span>↗</span></a>
+</div>
+
+<script src="koi.js"></script>
+<script src="site.js"></script>
+</body>
+</html>

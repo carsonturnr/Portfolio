@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en" data-accent="blue">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sweet-Haus · Carson Turner</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="description" content="A site and cabin configurator for Sweet-Haus, a maker of luxury tiny cabins. Buyers design their cabin and see the price as they go.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Sweet-Haus · Carson Turner">
+<meta property="og:description" content="A site and cabin configurator for Sweet-Haus, a maker of luxury tiny cabins. Buyers design their cabin and see the price as they go.">
+<meta property="og:url" content="https://carsonturner.me/sweet-haus.html">
+<meta property="og:image" content="https://carsonturner.me/img/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav class="nav">
+  <a href="index.html#top">home</a>
+  <a href="index.html#work">work</a>
+  <a href="index.html#clients" class="on">clients</a>
+  <a href="resume.pdf">resume</a>
+</nav>
+
+<div class="cs">
+  <a href="index.html#clients" class="back">← back</a>
+
+  <article>
+    <h1>Sweet-Haus</h1>
+    <div class="date">client · 2026</div>
+    <p>A site and cabin configurator for Sweet-Haus, a maker of luxury tiny cabins. Buyers design their cabin and see the price as they go.</p>
+    <div class="shot">[ screenshot ]</div>
+
+    <h2 id="ask">the ask</h2>
+    <p>Sweet-Haus wanted buyers and dealers to design a cabin online, see accurate pricing as they go and submit a ready-to-quote request.</p>
+
+    <h2 id="build">what i built</h2>
+    <ul>
+      <li>A configurator that swaps the cabin render live as you pick paint, trim and roof.</li>
+      <li>Live itemised pricing with add-ons and setup options.</li>
+      <li>A dealer mode with its own pricing.</li>
+      <li>An admin area for models, options, pricing, dealers and submissions, with CSV export.</li>
+    </ul>
+
+    <h2 id="stack">stack</h2>
+    <p>Next.js, React, TypeScript, Tailwind.</p>
+  </article>
+
+  <aside class="toc">
+    <a class="t" href="#ask">the ask</a>
+    <a class="t" href="#build">what i built</a>
+    <a class="t" href="#stack">stack</a>
+  </aside>
+</div>
+
+<script>
+const toc = [...document.querySelectorAll('.toc a.t')];
+const heads = toc.map(a => document.querySelector(a.getAttribute('href')));
+const spy = () => {
+  let cur = 0;
+  heads.forEach((h, i) => { if (h.getBoundingClientRect().top < 200) cur = i; });
+  if (innerHeight + scrollY >= document.body.scrollHeight - 4) cur = heads.length - 1;
+  toc.forEach((a, i) => a.classList.toggle('on', i === cur));
+};
+addEventListener('scroll', spy, { passive: true }); spy();
+</script>
+</body>
+</html>

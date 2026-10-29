@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en" data-accent="blue">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rapha · Carson Turner</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="description" content="An iOS app that writes a daily devotional plan for you, shaped by how you’re doing and what you rate.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Rapha · Carson Turner">
+<meta property="og:description" content="An iOS app that writes a daily devotional plan for you, shaped by how you’re doing and what you rate.">
+<meta property="og:url" content="https://carsonturner.me/rapha.html">
+<meta property="og:image" content="https://carsonturner.me/img/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav class="nav">
+  <a href="index.html#top">home</a>
+  <a href="index.html#work" class="on">work</a>
+  <a href="index.html#clients">clients</a>
+  <a href="resume.pdf">resume</a>
+</nav>
+
+<div class="cs">
+  <a href="index.html#work" class="back">← back</a>
+
+  <article>
+    <h1>Rapha</h1>
+    <div class="date">iOS · 2024</div>
+    <p>An iOS app that writes a daily devotional plan for you, shaped by how you’re doing and what you rate.</p>
+    <figure class="shot-img">
+      <img src="img/rapha.jpg" alt="Rapha app screens from the App Store" width="1212" height="496" loading="eager">
+    </figure>
+
+    <h2 id="problem">problem</h2>
+    <p>Most devotional apps give every user the same content, which makes it hard for people to stay engaged.</p>
+
+    <h2 id="build">what i built</h2>
+    <ul>
+      <li>A multi-stage Claude pipeline that turns onboarding answers into a multi-week plan.</li>
+      <li>Each week is generated in parallel with the prior week as context, so nothing repeats.</li>
+      <li>A SwiftUI app with Apple and Google sign-in, streaks and a paywall.</li>
+      <li>End-of-cycle ratings shape the next plan.</li>
+    </ul>
+
+    <h2 id="how">how it works</h2>
+    <p>Generation runs inside Postgres. A trigger queues later weeks when a plan is created, and pg_cron with pg_net drives a retrying job processor on Supabase Edge Functions.</p>
+
+    <h2 id="stack">stack</h2>
+    <p>SwiftUI, TypeScript, Supabase, PostgreSQL, Claude.</p>
+  </article>
+
+  <aside class="toc">
+    <a class="visit" href="https://apps.apple.com/us/app/rapha-daily-devotional/id6756983504">app store ↗</a>
+    <a class="t" href="#problem">problem</a>
+    <a class="t" href="#build">what i built</a>
+    <a class="t" href="#how">how it works</a>
+    <a class="t" href="#stack">stack</a>
+  </aside>
+</div>
+
+<script>
+const toc = [...document.querySelectorAll('.toc a.t')];
+const heads = toc.map(a => document.querySelector(a.getAttribute('href')));
+const spy = () => {
+  let cur = 0;
+  heads.forEach((h, i) => { if (h.getBoundingClientRect().top < 200) cur = i; });
+  if (innerHeight + scrollY >= document.body.scrollHeight - 4) cur = heads.length - 1;
+  toc.forEach((a, i) => a.classList.toggle('on', i === cur));
+};
+addEventListener('scroll', spy, { passive: true }); spy();
+</script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en" data-accent="blue">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stride Lab · Carson Turner</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="description" content="A motion-capture lab in your phone. Film yourself running and get a breakdown of injury risk, efficiency and how your form changes as you tire.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Stride Lab · Carson Turner">
+<meta property="og:description" content="A motion-capture lab in your phone. Film yourself running and get a breakdown of injury risk, efficiency and how your form changes as you tire.">
+<meta property="og:url" content="https://carsonturner.me/stride-lab.html">
+<meta property="og:image" content="https://carsonturner.me/img/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav class="nav">
+  <a href="index.html#top">home</a>
+  <a href="index.html#work" class="on">work</a>
+  <a href="index.html#clients">clients</a>
+  <a href="resume.pdf">resume</a>
+</nav>
+
+<div class="cs">
+  <a href="index.html#work" class="back">← back</a>
+
+  <article>
+    <h1>Stride Lab</h1>
+    <div class="date">pre-launch · 2026</div>
+    <p>A motion-capture lab in your phone. Film yourself running and get a breakdown of injury risk, efficiency and how your form changes as you tire.</p>
+    <figure class="shot-img">
+      <img src="img/stride-lab.jpg" alt="Stride Lab landing page" width="1291" height="673" loading="eager">
+    </figure>
+
+    <h2 id="problem">problem</h2>
+    <p>Gait labs are expensive, and most running apps only track pace and distance. Runners have no practical way to see how their form changes as they fatigue.</p>
+
+    <h2 id="build">what i’m building</h2>
+    <ul>
+      <li>Works on any footage: treadmill, workout or a handheld race clip.</li>
+      <li>Eleven metrics from published biomechanics research, each shown only when the camera angle supports it.</li>
+      <li>Fatigue drift: fresh vs. tired form across a session.</li>
+      <li>A coach grounded in the measured numbers that recommends drills and does not diagnose injuries.</li>
+    </ul>
+
+    <h2 id="status">status</h2>
+    <p>The marketing site and waitlist are live. The analysis pipeline comes after Mosaic ships.</p>
+
+    <h2 id="stack">stack</h2>
+    <p>React, Vite, Tailwind, Supabase, Modal GPU workers, RTMPose, Claude, Langfuse.</p>
+  </article>
+
+  <aside class="toc">
+    <a class="visit" href="https://trystridelab.vercel.app">visit site ↗</a>
+    <a class="t" href="#problem">problem</a>
+    <a class="t" href="#build">what i’m building</a>
+    <a class="t" href="#status">status</a>
+    <a class="t" href="#stack">stack</a>
+  </aside>
+</div>
+
+<script>
+const toc = [...document.querySelectorAll('.toc a.t')];
+const heads = toc.map(a => document.querySelector(a.getAttribute('href')));
+const spy = () => {
+  let cur = 0;
+  heads.forEach((h, i) => { if (h.getBoundingClientRect().top < 200) cur = i; });
+  if (innerHeight + scrollY >= document.body.scrollHeight - 4) cur = heads.length - 1;
+  toc.forEach((a, i) => a.classList.toggle('on', i === cur));
+};
+addEventListener('scroll', spy, { passive: true }); spy();
+</script>
+</body>
+</html>
