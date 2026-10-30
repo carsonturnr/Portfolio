@@ -35,7 +35,6 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .nav a { text-decoration: none; color: var(--muted); transition: color .15s; }
 .nav a:hover, .nav a.on { color: var(--fg); }
 
-
 /* one column, aligned like the pond intro */
 .col { position: relative; z-index: 2; width: min(880px, calc(100% - 32px)); margin: 0 auto; }
 
