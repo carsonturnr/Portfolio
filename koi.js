@@ -17,9 +17,12 @@
 
   let W, H, cols, rows, dpr, accR, accG, accB, accA, accN;
   function resize() {
-    dpr = Math.min(devicePixelRatio || 1, 2);
+    // full device resolution (3x on most phones), and a CSS size that matches the drawing exactly,
+    // so the browser never stretches the canvas when the mobile address bar shows or hides
+    dpr = Math.min(devicePixelRatio || 1, 3);
     W = innerWidth; H = innerHeight;
-    canvas.width = W * dpr; canvas.height = H * dpr;
+    canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
+    canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     cols = Math.ceil(W / CW); rows = Math.ceil(H / CH);
     const n = cols * rows;
