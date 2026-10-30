@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sweet-Haus · Carson Turner</title>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<meta name="description" content="A site and cabin configurator for Sweet-Haus, a maker of luxury tiny cabins. Buyers design their cabin and see the price as they go.">
+<meta name="description" content="A custom cabin configurator and a unified marketing site for Sweet-Haus, a tiny-home and cabin builder in Chesnee, South Carolina.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Sweet-Haus · Carson Turner">
-<meta property="og:description" content="A site and cabin configurator for Sweet-Haus, a maker of luxury tiny cabins. Buyers design their cabin and see the price as they go.">
+<meta property="og:description" content="A custom cabin configurator and a unified marketing site for Sweet-Haus, a tiny-home and cabin builder in Chesnee, South Carolina.">
 <meta property="og:url" content="https://carsonturner.me/sweet-haus.html">
 <meta property="og:image" content="https://carsonturner.me/img/og.jpg">
 <meta name="twitter:card" content="summary_large_image">
@@ -28,29 +28,44 @@
   <a href="index.html#clients" class="back">← back</a>
 
   <article>
+
     <h1>Sweet-Haus</h1>
     <div class="date">client · 2026</div>
-    <p>A site and cabin configurator for Sweet-Haus, a maker of luxury tiny cabins. Buyers design their cabin and see the price as they go.</p>
-    <div class="shot">[ screenshot ]</div>
+    <p>A custom cabin configurator and a unified marketing site for Sweet-Haus, a tiny-home and cabin builder in Chesnee, South Carolina.</p>
 
     <h2 id="ask">the ask</h2>
-    <p>Sweet-Haus wanted buyers and dealers to design a cabin online, see accurate pricing as they go and submit a ready-to-quote request.</p>
+    <p>Sweet-Haus wanted customers to design and price a cabin online, with every request reaching the sales team as a structured lead. Their marketing site also ran on another development company’s CMS, so they wanted it brought in-house.</p>
 
     <h2 id="build">what i built</h2>
     <ul>
-      <li>A configurator that swaps the cabin render live as you pick paint, trim and roof.</li>
-      <li>Live itemised pricing with add-ons and setup options.</li>
-      <li>A dealer mode with its own pricing.</li>
-      <li>An admin area for models, options, pricing, dealers and submissions, with CSV export.</li>
+      <li>A configurator that swaps between 181 real renders across 7 models as customers choose paint, roof and trim, falling back to the closest render when a combination doesn’t exist.</li>
+      <li>A pricing engine covering base price, options and add-ons, with a monthly payment calculator and a shipping estimate based on distance.</li>
+      <li>A lead pipeline that saves each build, syncs it to Airtable and hands it to the proposal portal, which emails the customer a link to their build.</li>
+      <li>An admin area for models, options, pricing and submissions, with CSV export.</li>
+      <li>A migration of 33 pages from the old site, with 301 redirects, a sitemap and search metadata.</li>
+    </ul>
+
+    <h2 id="how">how it works</h2>
+    <p>Renders follow a naming convention and a build step indexes the filenames, so the image files themselves decide which combinations are available. Models, options and prices live in Supabase and are edited in the admin area, with a bundled data file as a fallback.</p>
+
+    <h2 id="numbers">by the numbers</h2>
+    <ul>
+      <li>9 cabin models</li>
+      <li>527 option choices</li>
+      <li>181 rendered color combinations</li>
+      <li>Launched September 2026</li>
     </ul>
 
     <h2 id="stack">stack</h2>
-    <p>Next.js, React, TypeScript, Tailwind.</p>
+    <p>Next.js, React, TypeScript and Tailwind. Supabase. Resend and Airtable. Vercel.</p>
   </article>
 
   <aside class="toc">
+    <a class="visit" href="https://www.sweet-hauscabins.com">visit site ↗</a>
     <a class="t" href="#ask">the ask</a>
     <a class="t" href="#build">what i built</a>
+    <a class="t" href="#how">how it works</a>
+    <a class="t" href="#numbers">by the numbers</a>
     <a class="t" href="#stack">stack</a>
   </aside>
 </div>

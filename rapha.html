@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Rapha · Carson Turner</title>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<meta name="description" content="An iOS app that writes a daily devotional plan for you, shaped by how you’re doing and what you rate.">
+<meta name="description" content="An iOS app for young adults that builds a personalized 28-day devotional plan from their onboarding answers, with daily content, a faith chat and a daily-verse widget.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Rapha · Carson Turner">
-<meta property="og:description" content="An iOS app that writes a daily devotional plan for you, shaped by how you’re doing and what you rate.">
+<meta property="og:description" content="An iOS app for young adults that builds a personalized 28-day devotional plan from their onboarding answers, with daily content, a faith chat and a daily-verse widget.">
 <meta property="og:url" content="https://carsonturner.me/rapha.html">
 <meta property="og:image" content="https://carsonturner.me/img/og.jpg">
 <meta name="twitter:card" content="summary_large_image">
@@ -28,29 +28,28 @@
   <a href="index.html#work" class="back">← back</a>
 
   <article>
+
     <h1>Rapha</h1>
-    <div class="date">iOS · 2024</div>
-    <p>An iOS app that writes a daily devotional plan for you, shaped by how you’re doing and what you rate.</p>
-    <figure class="shot-img">
-      <img src="img/rapha.jpg" alt="Rapha app screens from the App Store" width="1212" height="496" loading="eager">
-    </figure>
+    <div class="date">iOS · 2025</div>
+    <p>An iOS app for young adults that builds a personalized 28-day devotional plan from their onboarding answers, with daily content, a faith chat and a daily-verse widget.</p>
 
     <h2 id="problem">problem</h2>
-    <p>Most devotional apps give every user the same content, which makes it hard for people to stay engaged.</p>
+    <p>Generic devotionals rarely fit a person’s life stage, struggles or faith background, which makes a daily habit hard to keep.</p>
 
     <h2 id="build">what i built</h2>
     <ul>
-      <li>A multi-stage Claude pipeline that turns onboarding answers into a multi-week plan.</li>
-      <li>Each week is generated in parallel with the prior week as context, so nothing repeats.</li>
-      <li>A SwiftUI app with Apple and Google sign-in, streaks and a paywall.</li>
-      <li>End-of-cycle ratings shape the next plan.</li>
+      <li>A Claude pipeline that outlines the full 28-day plan in one call, then generates each week’s seven days in parallel.</li>
+      <li>A job queue inside Postgres: creating a plan queues the later weeks, and pg_cron runs them on schedule with retries.</li>
+      <li>A feedback loop where end-of-cycle ratings and preferences shape the next plan.</li>
+      <li>Context-aware prompts that draw on the user’s profile, the season and the liturgical calendar.</li>
+      <li>A SwiftUI app of about 150 views with a 15-question onboarding flow, Apple and Google sign-in, a paywall and a WidgetKit verse widget.</li>
     </ul>
 
     <h2 id="how">how it works</h2>
-    <p>Generation runs inside Postgres. A trigger queues later weeks when a plan is created, and pg_cron with pg_net drives a retrying job processor on Supabase Edge Functions.</p>
+    <p>The app calls a Supabase Edge Function rather than the model directly. One call returns the plan’s themes and all 28 day titles, so the month is planned as a whole. Day 1 is generated first and the rest of the week follows in the background with Day 1 as context. Later weeks see earlier verses and lesson excerpts so content doesn’t repeat, and the daily verse skips anything used in the last 60 days.</p>
 
     <h2 id="stack">stack</h2>
-    <p>SwiftUI, TypeScript, Supabase, PostgreSQL, Claude.</p>
+    <p>Swift, SwiftUI and WidgetKit. Supabase (Postgres, Auth, Edge Functions in TypeScript, pg_cron, pg_net). Claude. Superwall.</p>
   </article>
 
   <aside class="toc">

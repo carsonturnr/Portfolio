@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Stride Lab · Carson Turner</title>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<meta name="description" content="A motion-capture lab in your phone. Film yourself running and get a breakdown of injury risk, efficiency and how your form changes as you tire.">
+<meta name="description" content="AI running-form analysis from phone video. Runners upload treadmill, workout or race footage and get a research-backed breakdown of injury risk, efficiency, symmetry and fatigue.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Stride Lab · Carson Turner">
-<meta property="og:description" content="A motion-capture lab in your phone. Film yourself running and get a breakdown of injury risk, efficiency and how your form changes as you tire.">
+<meta property="og:description" content="AI running-form analysis from phone video. Runners upload treadmill, workout or race footage and get a research-backed breakdown of injury risk, efficiency, symmetry and fatigue.">
 <meta property="og:url" content="https://carsonturner.me/stride-lab.html">
 <meta property="og:image" content="https://carsonturner.me/img/og.jpg">
 <meta name="twitter:card" content="summary_large_image">
@@ -28,36 +28,35 @@
   <a href="index.html#work" class="back">← back</a>
 
   <article>
+
     <h1>Stride Lab</h1>
-    <div class="date">pre-launch · 2026</div>
-    <p>A motion-capture lab in your phone. Film yourself running and get a breakdown of injury risk, efficiency and how your form changes as you tire.</p>
-    <figure class="shot-img">
-      <img src="img/stride-lab.jpg" alt="Stride Lab landing page" width="1291" height="673" loading="eager">
-    </figure>
+    <div class="date">pre-launch · launching 2027</div>
+    <p>AI running-form analysis from phone video. Runners upload treadmill, workout or race footage and get a research-backed breakdown of injury risk, efficiency, symmetry and fatigue.</p>
 
     <h2 id="problem">problem</h2>
-    <p>Gait labs are expensive, and most running apps only track pace and distance. Runners have no practical way to see how their form changes as they fatigue.</p>
-
-    <h2 id="build">what i’m building</h2>
-    <ul>
-      <li>Works on any footage: treadmill, workout or a handheld race clip.</li>
-      <li>Eleven metrics from published biomechanics research, each shown only when the camera angle supports it.</li>
-      <li>Fatigue drift: fresh vs. tired form across a session.</li>
-      <li>A coach grounded in the measured numbers that recommends drills and does not diagnose injuries.</li>
-    </ul>
+    <p>Runners can’t easily see where their form breaks down, especially when they’re tired or racing. Lab gait analysis is expensive, takes time and doesn’t work on race footage.</p>
 
     <h2 id="status">status</h2>
-    <p>The marketing site and waitlist are live. The analysis pipeline comes after Mosaic ships.</p>
+    <p>Pre-launch. The landing page and waitlist are live and the product is fully specified. The analysis pipeline will be built after Mosaic, with a first release to a small group of runners planned for early 2027.</p>
+
+    <h2 id="plan">what it will do</h2>
+    <ul>
+      <li>Detection and tracking, so a runner can tap themselves once in group footage.</li>
+      <li>2D pose estimation, camera-view classification and foot-contact detection.</li>
+      <li>Eleven metrics from published biomechanics research across injury risk, efficiency and foot strike, each computed only from camera angles where it’s valid.</li>
+      <li>Left-right symmetry and fatigue drift, compared against the runner’s own baseline.</li>
+      <li>A coach that recommends drills based on the measured numbers and doesn’t diagnose injuries.</li>
+    </ul>
 
     <h2 id="stack">stack</h2>
-    <p>React, Vite, Tailwind, Supabase, Modal GPU workers, RTMPose, Claude, Langfuse.</p>
+    <p>Built: React, Vite, TypeScript, Tailwind, Supabase and Vercel. Planned: Python GPU workers on Modal, a YOLO-class detector with ByteTrack-style tracking, RTMPose, Claude and Stripe.</p>
   </article>
 
   <aside class="toc">
     <a class="visit" href="https://trystridelab.vercel.app">visit site ↗</a>
     <a class="t" href="#problem">problem</a>
-    <a class="t" href="#build">what i’m building</a>
     <a class="t" href="#status">status</a>
+    <a class="t" href="#plan">what it will do</a>
     <a class="t" href="#stack">stack</a>
   </aside>
 </div>

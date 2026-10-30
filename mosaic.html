@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mosaic · Carson Turner</title>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<meta name="description" content="An AI creative strategist for Meta ads. It watches every ad, ties what's in it to results, and tells you what to make next.">
+<meta name="description" content="An AI creative strategist for Meta ads, built for brands that can’t afford an in-house strategist. It analyzes every ad, ranks what drives results and writes reports where every number is cited and verified.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Mosaic · Carson Turner">
-<meta property="og:description" content="An AI creative strategist for Meta ads. It watches every ad, ties what's in it to results, and tells you what to make next.">
+<meta property="og:description" content="An AI creative strategist for Meta ads, built for brands that can’t afford an in-house strategist. It analyzes every ad, ranks what drives results and writes reports where every number is cited and verified.">
 <meta property="og:url" content="https://carsonturner.me/mosaic.html">
 <meta property="og:image" content="https://carsonturner.me/img/og.jpg">
 <meta name="twitter:card" content="summary_large_image">
@@ -28,33 +28,38 @@
   <a href="index.html#work" class="back">← back</a>
 
   <article>
+
     <h1>Mosaic</h1>
     <div class="date">in progress · 2026</div>
-    <p>An AI creative strategist for Meta ads. It watches every ad, ties what's in it to results, and tells you what to make next.</p>
-    <figure class="shot-img">
-      <img src="img/mosaic-landing.jpg" alt="Mosaic landing page" width="1291" height="673" loading="eager">
-    </figure>
+    <p>An AI creative strategist for Meta ads, built for brands that can’t afford an in-house strategist. It analyzes every ad, ranks what drives results and writes reports where every number is cited and verified.</p>
 
     <h2 id="problem">problem</h2>
-    <p>Brands run hundreds of ads and struggle to tell which hooks and formats actually drive results. Performance data is noisy, so small differences are easy to misread.</p>
+    <p>Brands run many ad creatives but can’t tell which hooks, angles and formats drive results, or which ads are near-copies of each other. Doing that by hand means watching every ad and lining tags up against spend data, which small teams don’t have time for.</p>
 
     <h2 id="build">what i built</h2>
     <ul>
-      <li>Syncs ads and results from the Meta API.</li>
-      <li>Splits each video into scenes, transcripts and tags.</li>
-      <li>Ranks hooks and formats with statistical shrinkage.</li>
-      <li>Writes reports where every claim cites its ads.</li>
+      <li>A perception pipeline: scene detection that isolates the first three seconds, then one vision-model call per ad for the transcript, on-screen text and schema-checked tags.</li>
+      <li>Rankings that low-spend ads can’t game, using statistical shrinkage (beta-binomial and gamma-Poisson), plus detection of outliers, fading ads and underfunded winners.</li>
+      <li>Concept clustering from tags and script embeddings, with a spend-weighted diversity score.</li>
+      <li>Claude agents with read-only tools that write the strategist report and creative briefs. A validator checks every cited number against the database before a report is saved.</li>
+      <li>A Meta Marketing API sync with pagination, throttling backoff, idempotent upserts and scheduled re-pulls.</li>
     </ul>
 
     <h2 id="how">how it works</h2>
-    <p>A multimodal pipeline feeds Postgres and pgvector. Claude agents query it to write reports. Evals run in CI.</p>
-    <figure class="shot-img">
-      <img src="img/mosaic-report.jpg" alt="A Mosaic strategist report with cited numbers" width="897" height="673" loading="lazy">
-      <figcaption>A generated report from the live demo. Every number is checked against the data.</figcaption>
-    </figure>
+    <p>Ads and creatives sync from the Meta Marketing API. Media is stored privately and split into scenes with PySceneDetect. Gemini tags each ad, and Gemini embeddings group similar scripts. The analytics layer computes shrunk KPIs per tag across 7-day, 30-day, 90-day and all-time windows, and Claude agents write the report from those results.</p>
+
+    <h2 id="evals">evaluation</h2>
+    <ul>
+      <li>A synthetic data generator plants known patterns, such as a winning hook, fading ads, a hidden winner and near-duplicates, and checks that the analysis finds them. It runs in CI and nightly, and has passed all 7 checks on every run since October 24.</li>
+      <li>Grounding: all 131 cited numbers across 4 reports matched the database.</li>
+      <li>133 Python tests.</li>
+    </ul>
+
+    <h2 id="status">status</h2>
+    <p>In active development, with a demo-ready MVP planned for December 2026. The web app, the worker and a public read-only demo are live. Meta App Review and onboarding are next.</p>
 
     <h2 id="stack">stack</h2>
-    <p>React, FastAPI, Supabase, pgvector, Gemini, Claude, Modal, Langfuse.</p>
+    <p>React, Vite, TypeScript and Tailwind on Vercel. Supabase (Postgres, pgvector, Storage, Vault). Python and FastAPI on Modal. Gemini for tagging and embeddings, Claude for agents, Langfuse for tracing, GitHub Actions for CI.</p>
   </article>
 
   <aside class="toc">
@@ -62,6 +67,8 @@
     <a class="t" href="#problem">problem</a>
     <a class="t" href="#build">what i built</a>
     <a class="t" href="#how">how it works</a>
+    <a class="t" href="#evals">evaluation</a>
+    <a class="t" href="#status">status</a>
     <a class="t" href="#stack">stack</a>
   </aside>
 </div>

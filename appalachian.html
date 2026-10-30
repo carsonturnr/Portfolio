@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Appalachian Adventure Co. · Carson Turner</title>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<meta name="description" content="A rebuilt website for The Appalachian Adventure Company, a real estate firm in Waynesville, North Carolina, with MLS listings that load in automatically.">
+<meta name="description" content="A rebuild of a North Carolina real estate firm’s website in Framer, with a listing system the broker can run himself and compliance built in.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Appalachian Adventure Co. · Carson Turner">
-<meta property="og:description" content="A rebuilt website for The Appalachian Adventure Company, a real estate firm in Waynesville, North Carolina, with MLS listings that load in automatically.">
+<meta property="og:description" content="A rebuild of a North Carolina real estate firm’s website in Framer, with a listing system the broker can run himself and compliance built in.">
 <meta property="og:url" content="https://carsonturner.me/appalachian.html">
 <meta property="og:image" content="https://carsonturner.me/img/og.jpg">
 <meta name="twitter:card" content="summary_large_image">
@@ -28,33 +28,34 @@
   <a href="index.html#clients" class="back">← back</a>
 
   <article>
+
     <h1>Appalachian Adventure Co.</h1>
     <div class="date">client · 2026</div>
-    <p>A rebuilt website for The Appalachian Adventure Company, a real estate firm in Waynesville, North Carolina, with MLS listings that load in automatically.</p>
-    <div class="shot">[ screenshot ]</div>
+    <p>A rebuild of a North Carolina real estate firm’s website in Framer, with a listing system the broker can run himself and compliance built in.</p>
 
     <h2 id="ask">the ask</h2>
-    <p>Replace an outdated Wix site with a modern one the team can run themselves. Listings should come straight from the MLS instead of being entered by hand, and nothing from the old site, including its search rankings, should be lost.</p>
+    <p>The old Wix site still read as an adventure-guiding business, with real estate buried, and it lacked the firm disclosure the law requires. The broker wanted to post a listing from his phone in a couple of minutes, with nothing on the site creating regulatory risk.</p>
 
-    <h2 id="build">what i did</h2>
+    <h2 id="build">what i built</h2>
     <ul>
-      <li>Redesigned and rebuilt the site in Framer, with a CMS the team can edit.</li>
-      <li>Set up automatic ingestion of MLS listings, so new properties appear without manual entry.</li>
-      <li>Migrated the old site's pages, blog posts and images.</li>
-      <li>Mapped every old URL to its new path to preserve links and search rankings.</li>
+      <li>A listing system in the Framer CMS. Each listing pulls its agent from the team record, so agent cards and team pages fill in automatically, and sold listings keep their page.</li>
+      <li>Compliance built into the system: a disclosure footer on every page, acreage shown as “+/- acres”, listings that start as drafts, and forms that never ask about finances.</li>
+      <li>A full migration from an extracted copy of the old site, with all seven blog posts at their original URLs and 33 old URLs mapped for redirects.</li>
+      <li>Responsive layouts for desktop, tablet and phone, built from reusable components.</li>
+      <li>A plain-language operator guide so the broker can run the site himself.</li>
     </ul>
 
-    <h2 id="rules">the rules</h2>
-    <p>Real estate sites have strict compliance language. Every page carries the firm disclosure and Equal Housing, and the copy follows the broker’s rules word for word.</p>
+    <h2 id="status">status</h2>
+    <p>Built and revised in October 2026. Launch is waiting on the client’s Framer plan upgrade and final approval.</p>
 
     <h2 id="stack">stack</h2>
-    <p>Framer, Framer CMS, MLS data feed, Python.</p>
+    <p>Framer and Framer CMS, edited through Framer’s command-line agent tool from Claude Code. Python and HTTrack to extract the old site.</p>
   </article>
 
   <aside class="toc">
     <a class="t" href="#ask">the ask</a>
-    <a class="t" href="#build">what i did</a>
-    <a class="t" href="#rules">the rules</a>
+    <a class="t" href="#build">what i built</a>
+    <a class="t" href="#status">status</a>
     <a class="t" href="#stack">stack</a>
   </aside>
 </div>
