@@ -4,8 +4,7 @@
     krastor:  { co: 'Krastor Inc.', date: 'Jan 2026 – now', role: 'Software Engineer', desc: 'Sole engineer. AI agents and apps for small businesses.', url: '', c: '#4A5BD9' },
     mccarren: { co: 'McCarren Capital', date: 'Apr 2025 – Jan 2026', role: 'Software Engineer', desc: 'Boutique advisory for private equity. I built backend, CRM integrations and email automation.', url: '', c: '#3E6A92' },
     swift:    { co: 'Swift Flight LLC', date: '2022 – 2025', role: 'Founder', desc: 'Scaled an Amazon FBA business to $1.1M+ in revenue. Built Python tools that tracked competitor storefronts and flagged new listings.', url: '', c: '#262523' },
-    mosaic:   { co: 'Mosaic', date: 'In progress', role: 'AI creative strategist', desc: 'Breaks down every Meta ad scene by scene, ranks what works and writes reports that cite their ads.', url: 'mosaic.html', c: '#7A5AF8' },
-    olemiss:  { co: 'Ole Miss', date: '2022 – 2027', role: 'B.S. Computer Science', desc: 'D1 track. 600m school record, SEC runner-up in the DMR.', url: '', c: '#CE1126' }
+    mosaic:   { co: 'Mosaic', date: 'In progress', role: 'AI creative strategist', desc: 'Breaks down every Meta ad scene by scene, ranks what works and writes reports that cite their ads.', url: 'mosaic.html', c: '#7A5AF8' }
   };
   const pop = document.getElementById('pop');
   const $ = id => document.getElementById(id);
