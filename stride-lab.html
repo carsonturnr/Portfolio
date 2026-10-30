@@ -64,13 +64,23 @@
 <script>
 const toc = [...document.querySelectorAll('.toc a.t')];
 const heads = toc.map(a => document.querySelector(a.getAttribute('href')));
+// Each section becomes active once its heading scrolls near the top. Headings near the end of a
+// short page can never get that far, so they share the last stretch of scrolling evenly instead.
 const spy = () => {
+  const max = document.documentElement.scrollHeight - innerHeight;
+  const at = heads.map(h => h.getBoundingClientRect().top + scrollY - 200);
+  const k = at.findIndex(t => t > max);
+  if (k > 0) {
+    const from = Math.max(0, at[k - 1]), n = at.length - k + 1;
+    for (let i = k; i < at.length; i++) at[i] = from + (max - from) * (i - k + 1) / n;
+  }
   let cur = 0;
-  heads.forEach((h, i) => { if (h.getBoundingClientRect().top < 200) cur = i; });
-  if (innerHeight + scrollY >= document.body.scrollHeight - 4) cur = heads.length - 1;
+  at.forEach((t, i) => { if (scrollY >= t - 1) cur = i; });
   toc.forEach((a, i) => a.classList.toggle('on', i === cur));
 };
-addEventListener('scroll', spy, { passive: true }); spy();
+addEventListener('scroll', spy, { passive: true });
+addEventListener('resize', spy);
+spy();
 </script>
 </body>
 </html>
