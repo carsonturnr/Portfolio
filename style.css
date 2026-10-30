@@ -35,11 +35,6 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .nav a { text-decoration: none; color: var(--muted); transition: color .15s; }
 .nav a:hover, .nav a.on { color: var(--fg); }
 
-.counter {
-  position: fixed; top: 32px; right: max(16px, calc(50% - 450px));
-  display: flex; flex-direction: column; font-size: 11px; line-height: 18px;
-  color: var(--muted); text-align: right; z-index: 3; pointer-events: none;
-}
 
 /* one column, aligned like the pond intro */
 .col { position: relative; z-index: 2; width: min(880px, calc(100% - 32px)); margin: 0 auto; }
@@ -135,7 +130,6 @@ a.row:hover .name::after { content: ' →'; color: var(--muted); }
 
 @media (max-width: 720px) {
   .nav { gap: 18px; top: 16px; }
-  .counter { display: none; }
   .hero .col { top: auto; bottom: 84px; }
   .down { bottom: 40px; }
   .row { grid-template-columns: 1fr auto; gap: 4px 16px; }

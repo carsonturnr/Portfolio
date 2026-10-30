@@ -361,6 +361,5 @@
   resize();
   const count = W < 700 ? 3 : 4;
   for (let i = 0; i < count; i++) fish.push(makeFish(i));
-  document.getElementById('fishCount').textContent = count;
   requestAnimationFrame(frame);
 })();
