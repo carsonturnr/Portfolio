@@ -136,7 +136,8 @@ a.row:hover .name::after { content: ' →'; color: var(--muted); }
 @media (max-width: 720px) {
   .nav { gap: 18px; top: 16px; }
   .counter { display: none; }
-  .hero .col { top: auto; bottom: 72px; }
+  .hero .col { top: auto; bottom: 84px; }
+  .down { bottom: 40px; }
   .row { grid-template-columns: 1fr auto; gap: 4px 16px; }
   .row .desc { grid-column: 1 / -1; grid-row: 2; }
   .cs { grid-template-columns: 1fr; padding-top: 80px; }
