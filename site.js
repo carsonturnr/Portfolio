@@ -27,7 +27,7 @@
 
   // ---------- copy email ----------
   $('copy').addEventListener('click', () => {
-    navigator.clipboard && navigator.clipboard.writeText('carson@creation.sh').catch(() => {});
+    navigator.clipboard && navigator.clipboard.writeText('carsonturnersf@gmail.com').catch(() => {});
     $('copied').classList.add('show'); setTimeout(() => $('copied').classList.remove('show'), 1400);
   });
 
