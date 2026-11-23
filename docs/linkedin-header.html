@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!-- Source for img/linkedin-header.png and img/og.png. How to re-render: docs/worklog/2026-11-23-linkedin-header.md -->
+<html lang="en" data-accent="blue">
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<style>
+  html, body { width: 1200px; height: var(--h, 627px); overflow: hidden; }
+  #pond { width: 1200px; height: var(--h, 627px); }
+  .url { position: absolute; right: 96px; bottom: 80px; z-index: 2; font: 400 22px/1 'Geist Mono', monospace; color: var(--muted); }
+</style>
+</head>
+<body>
+<canvas id="pond"></canvas>
+<div class="url">carsonturner.me</div>
+<script>
+// ?h=630 renders the og:image size
+const H = +new URLSearchParams(location.search).get('h') || 627;
+document.documentElement.style.setProperty('--h', H + 'px');
+Object.defineProperty(window, 'innerWidth', { value: 1200 });
+Object.defineProperty(window, 'innerHeight', { value: H });
+Object.defineProperty(window, 'devicePixelRatio', { value: 1 });
+// seeded so every render paints the same koi markings
+let s = 7; Math.random = () => (s = (s * 16807) % 2147483647) / 2147483647;
+
+// lay a fish along a gentle arc: head at (x, y) facing angle a, curving by c rad/px toward the tail
+function place(f, x, y, a, c, stroke) {
+  f.x = x; f.y = y; f.a = a; f.amp = 0.7; f.stroke = stroke;
+  let px = x, py = y, ang = a;
+  f.path = [{ x, y }];
+  for (let k = 1; k <= 80; k++) { ang += c * f.step; px -= Math.cos(ang) * f.step; py -= Math.sin(ang) * f.step; f.path.push({ x: px, y: py }); }
+}
+window.__koi = ({ fish, makeFish, draw }) => {
+  fish.length = 0;
+  const koi = makeFish(0);                            // the kohaku from the site's flock
+  koi.scale = 1.55; koi.len = 300 * 1.55; koi.step = koi.len / 80;
+  place(koi, 850, 340 + (H - 627) / 2, 0.3, -0.0013, 4.3);
+  fish.push(koi);
+  draw();
+  document.title = 'done';
+};
+document.fonts.load('500 11px "Geist Mono"').then(() => fetch('../koi.js')).then(r => r.text()).then(src => {
+  // run the site's koi code unchanged, except: hand its fish to __koi instead of animating
+  const i = src.lastIndexOf('requestAnimationFrame(frame);');
+  (0, eval)(src.slice(0, i) + '__koi({ fish, makeFish, draw });' + src.slice(i + 29));
+});
+</script>
+</body>
+</html>
