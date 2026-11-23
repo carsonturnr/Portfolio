@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en" data-accent="blue">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sway · Carson Turner</title>
+<link rel="icon" href="favicon.svg?v=6" type="image/svg+xml">
+<meta name="description" content="A growth tool for iOS subscription apps. It connects a founder’s TikTok and Instagram accounts, Meta and TikTok ads and subscription data, then shows which posts and ads bring in paying subscribers and what to do next.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Sway · Carson Turner">
+<meta property="og:description" content="A growth tool for iOS subscription apps. It connects a founder’s TikTok and Instagram accounts, Meta and TikTok ads and subscription data, then shows which posts and ads bring in paying subscribers and what to do next.">
+<meta property="og:url" content="https://carsonturner.me/sway">
+<meta property="og:image" content="https://carsonturner.me/img/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav class="nav">
+  <a href="/#top">home</a>
+  <a href="/#work" class="on">work</a>
+  <a href="resume.pdf">resume</a>
+</nav>
+
+<div class="cs">
+  <a href="/#work" class="back">← back</a>
+
+  <article>
+
+    <h1>Sway</h1>
+    <div class="date">web · 2026</div>
+    <p>A growth tool for iOS subscription apps. It connects a founder’s TikTok and Instagram accounts, Meta and TikTok ads and subscription data, then shows which posts and ads bring in paying subscribers and what to do next.</p>
+
+    <h2 id="problem">problem</h2>
+    <p>Founders of small iOS apps post across several TikTok and Instagram accounts and spend some money on ads, but each of their tools covers one slice and judges content by views. None of them answers the real question: which posts and ads bring in people who pay?</p>
+
+    <h2 id="build">what i built</h2>
+    <ul>
+      <li>Rankings of every post and ad by installs, trials and paid subscribers, with a range on each number, so one lucky post doesn’t look like a winner.</li>
+      <li>An agent that manages a founder’s Meta ad spend: it pauses losing ads and shifts budget to winners. Every change needs the founder’s approval, stays under spend limits they set, is checked against Meta after it’s made and can be undone in one tap.</li>
+      <li>AI tagging of every post and ad by hook, angle and format, from the video frames, transcript and caption, for about a cent each.</li>
+      <li>Weekly recommendations on what to post, scale and cut, each with the evidence behind it and three hooks to try.</li>
+      <li>Onboarding from an App Store link: Sway reads the listing, reviews and competitors and writes a growth brief.</li>
+      <li>Scheduled posting to many accounts, a chat that answers questions about the app’s own data, and an MCP server so founders can use Sway from Claude or Cursor.</li>
+    </ul>
+
+    <h2 id="how">how it works</h2>
+    <p>One TypeScript codebase: a Hono API and a React web app that share the same schemas, running on Fly.io with Postgres on Neon. Thirteen background jobs handle posting, syncing, tagging and recommendations, and a lock row in Postgres makes sure no job runs twice, so a post is never sent twice. Claude does the tagging and writing; changes to ads follow a written rulebook, not the model.</p>
+
+    <h2 id="hard">hard problems</h2>
+    <ul>
+      <li>Ranking small samples honestly. Indie apps have a handful of posts and ads, so raw rates crown lucky outliers. Sway shrinks small groups toward each account’s baseline (Beta-Binomial for rates, Gamma-Poisson for installs per dollar), gives every number an 80% range and the chance it truly beats the baseline, and only recommends a change once the evidence clears a set bar. Organic posts have no click tracking, so their effect on trials is estimated with a regression written from scratch that holds out ad spend and the growth trend, and it is always labelled as an estimate.</li>
+      <li>Letting an AI agent touch real ad spend. Every action is off until the founder turns it on, and each proposal waits for approval and expires if ignored. On approval, Sway checks the kill switch, the action’s toggle and the daily and monthly ceilings, projecting the month’s spend before raising a budget. It then makes the change, reads it back from Meta, reverts if Meta disagrees and stores the before and after for undo. Spend ceilings can only be changed in the app after a fresh sign-in, never from chat or the MCP server.</li>
+      <li>Tagging everything for about a cent. ffmpeg pulls frames weighted toward the first three seconds, where the hook is, and measures length and cut pace itself instead of asking the model. AssemblyAI transcribes the audio, and one Claude call tags the post against a closed, versioned taxonomy with structured output. When the taxonomy changes, everything is re-tagged.</li>
+      <li>One outcome model from many sources. RevenueCat, Superwall and Adapty describe trials, conversions, renewals and refunds differently, and Meta, TikTok and Instagram revise their numbers for days. Sway maps them all into one set of conversion steps, keeps every raw response so new fields can be backfilled, re-reads the days platforms revise and links each boosted post back to the organic post it came from.</li>
+      <li>Keeping founders’ accounts safe. Platform tokens are encrypted with AES-256-GCM and never reach the browser, logs or prompts, and every link a user submits is fetched through a guard that blocks private and internal addresses on every redirect.</li>
+    </ul>
+
+    <h2 id="status">status</h2>
+    <p>Launching to the waitlist.</p>
+
+    <h2 id="stack">stack</h2>
+    <p>TypeScript, React, Vite, Hono and zod. Postgres on Neon. Claude, AssemblyAI and ffmpeg. Stripe and Clerk. Docker on Fly.io.</p>
+  </article>
+
+  <aside class="toc">
+    <a class="visit" href="https://swaygrowth.com">visit site ↗</a>
+    <a class="t" href="#problem">problem</a>
+    <a class="t" href="#build">what i built</a>
+    <a class="t" href="#how">how it works</a>
+    <a class="t" href="#hard">hard problems</a>
+    <a class="t" href="#status">status</a>
+    <a class="t" href="#stack">stack</a>
+  </aside>
+</div>
+
+<script>
+const toc = [...document.querySelectorAll('.toc a.t')];
+const heads = toc.map(a => document.querySelector(a.getAttribute('href')));
+// Each section becomes active once its heading scrolls near the top. Headings near the end of a
+// short page can never get that far, so they share the last stretch of scrolling evenly instead.
+const spy = () => {
+  const max = document.documentElement.scrollHeight - innerHeight;
+  const at = heads.map(h => h.getBoundingClientRect().top + scrollY - 200);
+  const k = at.findIndex(t => t > max);
+  if (k > 0) {
+    const from = Math.max(0, at[k - 1]), n = at.length - k + 1;
+    for (let i = k; i < at.length; i++) at[i] = from + (max - from) * (i - k + 1) / n;
+  }
+  let cur = 0;
+  at.forEach((t, i) => { if (scrollY >= t - 1) cur = i; });
+  toc.forEach((a, i) => a.classList.toggle('on', i === cur));
+};
+addEventListener('scroll', spy, { passive: true });
+addEventListener('resize', spy);
+spy();
+</script>
+</body>
+</html>

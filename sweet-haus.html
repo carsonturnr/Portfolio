@@ -9,7 +9,7 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Sweet-Haus · Carson Turner">
 <meta property="og:description" content="A custom cabin configurator and a unified marketing site for Sweet-Haus, a tiny-home and cabin builder in Chesnee, South Carolina.">
-<meta property="og:url" content="https://carsonturner.me/sweet-haus.html">
+<meta property="og:url" content="https://carsonturner.me/sweet-haus">
 <meta property="og:image" content="https://carsonturner.me/img/og.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,14 +18,13 @@
 </head>
 <body>
 <nav class="nav">
-  <a href="index.html#top">home</a>
-  <a href="index.html#work">work</a>
-  <a href="index.html#clients" class="on">clients</a>
+  <a href="/#top">home</a>
+  <a href="/#work">work</a>
   <a href="resume.pdf">resume</a>
 </nav>
 
 <div class="cs">
-  <a href="index.html#clients" class="back">← back</a>
+  <a href="/#clients" class="back">← back</a>
 
   <article>
 
@@ -33,39 +32,53 @@
     <div class="date">client · 2026</div>
     <p>A custom cabin configurator and a unified marketing site for Sweet-Haus, a tiny-home and cabin builder in Chesnee, South Carolina.</p>
 
+    <h2 id="said">what they said</h2>
+    <p>“Buying a home shouldn’t take weeks of back-and-forth just to learn what it costs … We believe this is the most in-depth design tool in the tiny home industry, and the first to take a customer from choosing colors to paying a deposit and getting a place in production.”</p>
+    <p>Todd Garland, CEO of Sweet-Haus, in the company’s November 2026 press release</p>
+
     <h2 id="ask">the ask</h2>
     <p>Sweet-Haus wanted customers to design and price a cabin online, with every request reaching the sales team as a structured lead. Their marketing site also ran on another development company’s CMS, so they wanted it brought in-house.</p>
 
     <h2 id="build">what i built</h2>
     <ul>
-      <li>A configurator that swaps between 181 real renders across 7 models as customers choose paint, roof and trim, falling back to the closest render when a combination doesn’t exist.</li>
+      <li>A configurator that, at launch, swapped between 181 real renders across 7 models as customers chose paint, roof and trim, falling back to the closest render when a combination didn’t exist.</li>
       <li>A pricing engine covering base price, options and add-ons, with a monthly payment calculator and a shipping estimate based on distance.</li>
-      <li>A lead pipeline that saves each build, syncs it to Airtable and hands it to the proposal portal, which emails the customer a link to their build.</li>
+      <li>A submit pipeline that validates each build, saves it and hands it to the sales team in under a second.</li>
       <li>An admin area for models, options, pricing and submissions, with CSV export.</li>
-      <li>A migration of 33 pages from the old site, with 301 redirects, a sitemap and search metadata.</li>
+      <li>The first version of the unified site: 33 pages migrated from the old site, with 301 redirects, a sitemap and search metadata.</li>
     </ul>
 
     <h2 id="how">how it works</h2>
-    <p>Renders follow a naming convention and a build step indexes the filenames, so the image files themselves decide which combinations are available. Models, options and prices live in Supabase and are edited in the admin area, with a bundled data file as a fallback.</p>
+    <p>One Next.js app serves the marketing pages and the configurator. Models, options and prices live in Supabase and are edited in the admin area; the site caches the catalog for five minutes and falls back to a bundled copy if the database can’t be reached.</p>
+    <p>A design partner refined the site’s look before launch, and Sweet-Haus’s own team has added features since.</p>
 
-    <h2 id="numbers">by the numbers</h2>
+    <h2 id="submit">the submit pipeline</h2>
+    <p>When a customer submits a build, the server re-checks the build and recalculates its prices instead of trusting the browser, and a hidden field screens out bots. The build is saved to Supabase first, then handed to the proposal portal, which emails the customer a link to their build and notifies the team, then synced to Airtable and recorded as a conversion. The team and the customer are typically notified in under a second.</p>
+
+    <h2 id="hard">hard problems</h2>
     <ul>
-      <li>9 cabin models</li>
-      <li>527 option choices</li>
-      <li>181 rendered color combinations</li>
-      <li>Launched September 2026</li>
+      <li>Renders that didn’t match the color buttons. The client’s render filenames were inconsistent, and colors had been renamed. I made the files on disk the source of truth: a build step writes a manifest of every render, and a resolver matches each choice through color aliases, falling back to the nearest render that exists.</li>
+      <li>Moving DNS off the old agency without breaking email. I inventoried every record, recreated them ahead of time on the new host, then switched nameservers, keeping the old setup as a rollback. A stale DNSSEC record left behind made validating resolvers reject the domain; I found and removed it. Email never went down.</li>
+      <li>A silent failure inherited from the old site. Pre-launch checks with real test submissions found that the old site’s lead notifications had been failing quietly for weeks because a subdomain had no DNS record. I restored it and verified every notification path end to end before cutover.</li>
+      <li>Keeping search traffic. Redirects came from a copy of the old site and an export of the old CMS’s database. Before launch I checked every page and redirect pattern, and 25 live checks after launch passed with zero failures.</li>
     </ul>
 
+    <h2 id="team">working with their team</h2>
+    <p>I set up a sandbox branch with its own preview deployment and wrote setup guides, so Sweet-Haus’s team and their design partner can make and ship changes with Claude Code. They have shipped features through pull requests since launch.</p>
+
     <h2 id="stack">stack</h2>
-    <p>Next.js, React, TypeScript and Tailwind. Supabase. Resend and Airtable. Vercel.</p>
+    <p>Next.js, React, TypeScript and Tailwind. Supabase (Postgres, Storage and an Edge Function). Resend and Airtable. Vercel and Vercel DNS.</p>
   </article>
 
   <aside class="toc">
     <a class="visit" href="https://www.sweet-hauscabins.com">visit site ↗</a>
+    <a class="t" href="#said">what they said</a>
     <a class="t" href="#ask">the ask</a>
     <a class="t" href="#build">what i built</a>
     <a class="t" href="#how">how it works</a>
-    <a class="t" href="#numbers">by the numbers</a>
+    <a class="t" href="#submit">the submit pipeline</a>
+    <a class="t" href="#hard">hard problems</a>
+    <a class="t" href="#team">working with their team</a>
     <a class="t" href="#stack">stack</a>
   </aside>
 </div>

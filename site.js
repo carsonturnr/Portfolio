@@ -1,10 +1,12 @@
 (() => {
   // ---------- inline popover cards ----------
   const cards = {
-    krastor:  { co: 'Krastor Inc.', date: 'Jan 2026 – now', role: 'Software Engineer', desc: 'Sole engineer. AI agents and apps for small businesses.', url: '', c: '#4A5BD9' },
-    mccarren: { co: 'McCarren Capital', date: 'Apr 2025 – Jan 2026', role: 'Software Engineer', desc: 'Boutique advisory for private equity. I built backend, CRM integrations and email automation.', url: '', c: '#3E6A92' },
-    swift:    { co: 'Swift Flight LLC', date: '2022 – 2025', role: 'Founder', desc: 'Scaled an Amazon FBA business to $1.1M+ in revenue. Built Python tools that tracked competitor storefronts and flagged new listings.', url: '', c: '#262523' },
-    mosaic:   { co: 'Mosaic', date: 'In progress', role: 'AI creative strategist', desc: 'Breaks down every Meta ad scene by scene, ranks what works and writes reports that cite their ads.', url: 'mosaic.html', c: '#7A5AF8' }
+    krastor:  { co: 'Krastor Inc.', date: 'Jan 2026 – now', role: 'Software Engineer', desc: 'Sole engineer. AI agents and apps for small businesses.', page: '/#clients', site: 'https://krastor.com', c: '#4A5BD9' },
+    mccarren: { co: 'McCarren Capital', date: 'Apr 2025 – Jan 2026', role: 'Software Engineer', desc: 'Boutique advisory for private equity. I built backend, CRM integrations and email automation.', page: '/mccarren', site: 'https://mccarrencapital.com', c: '#3E6A92' },
+    swift:    { co: 'Swift Flight LLC', date: '2022 – 2025', role: 'Founder', desc: 'Founded an Amazon business, from online arbitrage to distribution with health and wellness brands; $700K+ in revenue. Built Python tools that flagged new competitor listings.', page: '/swift-flight', site: '', c: '#262523' },
+    sway:     { co: 'Sway', date: 'Sep 2026 – now', role: 'Growth platform for iOS apps', desc: 'Shows iOS subscription apps which posts and ads bring in paying subscribers, and what to post, scale and cut next.', page: '/sway', site: 'https://swaygrowth.com', c: '#1A1AF0' },
+    manta:    { co: 'Manta', date: 'Oct 2026 – now', role: 'Prediction-market terminal', desc: 'Records Kalshi and Polymarket around the clock: a screener of 5,000+ contracts, live order books and independent fair values.', page: '/manta', site: 'https://mantamarkets.com', c: '#1F7A8C' },
+    rapha:    { co: 'Rapha', date: 'Sep 2025 – now', role: 'Personalized devotional app for iOS', desc: 'Live on the App Store. Claude writes each user a personal devotional plan that adapts every month.', page: '/rapha', site: 'https://getrapha.co', c: '#8A5A2B' }
   };
   const pop = document.getElementById('pop');
   const $ = id => document.getElementById(id);
@@ -15,7 +17,8 @@
     if (openFor === b) return close();
     const d = cards[b.dataset.card];
     $('popCo').textContent = d.co; $('popDate').textContent = d.date; $('popRole').textContent = d.role; $('popDesc').textContent = d.desc;
-    $('popLink').href = d.url || '#'; $('popLink').hidden = !d.url; $('popLogo').style.background = d.c;
+    $('popBody').href = d.page; $('popLogo').style.background = d.c;
+    if (d.site) $('popCo').href = d.site; else $('popCo').removeAttribute('href');
     pop.hidden = false;
     const r = b.getBoundingClientRect();
     pop.style.left = Math.max(16, Math.min(r.left, innerWidth - pop.offsetWidth - 16)) + 'px';
@@ -24,6 +27,7 @@
   }));
   document.addEventListener('click', e => { if (!pop.contains(e.target)) close(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+  $('popBody').addEventListener('click', close);
 
   // ---------- copy email ----------
   $('copy').addEventListener('click', () => {
@@ -33,8 +37,8 @@
 
   // ---------- local time ----------
   const tick = () => {
-    const t = new Date().toLocaleTimeString('en-US', { timeZone: 'America/Chicago', hour: 'numeric', minute: '2-digit' }).replace(' ', '').toLowerCase();
-    $('clock').textContent = `${t} in oxford, mississippi`;
+    const t = new Date().toLocaleTimeString('en-US', { timeZone: 'America/New_York', hour: 'numeric', minute: '2-digit' }).replace(' ', '').toLowerCase();
+    $('clock').textContent = `${t} in new york, ny`;
   };
   tick(); setInterval(tick, 20000);
 

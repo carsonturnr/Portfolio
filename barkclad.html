@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Barkclad · Carson Turner</title>
+<title>BarkClad · Carson Turner</title>
 <link rel="icon" href="favicon.svg?v=6" type="image/svg+xml">
 <meta name="description" content="A new website, online store and internal Command Center for BarkClad, a North Carolina maker of patented poplar bark siding, all on one shared database.">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Barkclad · Carson Turner">
+<meta property="og:title" content="BarkClad · Carson Turner">
 <meta property="og:description" content="A new website, online store and internal Command Center for BarkClad, a North Carolina maker of patented poplar bark siding, all on one shared database.">
-<meta property="og:url" content="https://carsonturner.me/barkclad.html">
+<meta property="og:url" content="https://carsonturner.me/barkclad">
 <meta property="og:image" content="https://carsonturner.me/img/og.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,45 +18,72 @@
 </head>
 <body>
 <nav class="nav">
-  <a href="index.html#top">home</a>
-  <a href="index.html#work">work</a>
-  <a href="index.html#clients" class="on">clients</a>
+  <a href="/#top">home</a>
+  <a href="/#work">work</a>
   <a href="resume.pdf">resume</a>
 </nav>
 
 <div class="cs">
-  <a href="index.html#clients" class="back">← back</a>
+  <a href="/#clients" class="back">← back</a>
 
   <article>
 
-    <h1>Barkclad</h1>
+    <h1>BarkClad</h1>
     <div class="date">client · 2026</div>
     <p>A new website, online store and internal Command Center for BarkClad, a North Carolina maker of patented poplar bark siding, all on one shared database.</p>
 
     <h2 id="ask">the ask</h2>
-    <p>BarkClad ran on several disconnected platforms, including a WordPress site and a separate SmartBark site. They needed one system, without risking the search rankings the old sites had earned.</p>
+    <p>BarkClad ran on several disconnected platforms, including a WordPress and WooCommerce site and a separate SmartBark site on Wix. They needed one system, without risking the search rankings the old sites had earned.</p>
 
     <h2 id="build">what i built</h2>
     <ul>
-      <li>About 40 public pages, including product pages, a product-chooser quiz, project galleries and an installation guide.</li>
-      <li>A working store with Stripe payments, North Carolina sales tax by county, and live shipping rates and labels through Shippo.</li>
-      <li>A CMS with 10 content types and 23 editable page sections, so staff can change pages, products and prices with drafts and live preview.</li>
-      <li>The Command Center: one private dashboard for every lead, quote, order and customer, with a sales pipeline board, quoting, invoicing, label buying and a daily check that flags overdue follow-ups.</li>
-      <li>Role-based access for admin, editor and sales users.</li>
+      <li>A new public site of 41 page templates, including product pages, a product-chooser quiz, project galleries, installation guides and a dealer program.</li>
+      <li>A store with Stripe Checkout, live shipping rates and label purchase.</li>
+      <li>A CMS where staff can edit every page.</li>
+      <li>The Command Center, an internal CRM for every lead, quote, order and customer.</li>
+      <li>n8n AI agents that draft follow-ups from each customer’s history in the CRM, for the sales team to review and send.</li>
+      <li>Individual staff logins, with every form, order and Command Center action written to an event log.</li>
     </ul>
 
-    <h2 id="seo">keeping search rankings</h2>
-    <p>167 old URLs, including legacy WordPress links and the entire SmartBark domain, redirect to their new pages. Original titles, descriptions and headings were carried over, 45 blog posts were migrated, and search traffic held after the switch.</p>
+    <h2 id="crm">the command center</h2>
+    <ul>
+      <li>A lead pipeline that scores each lead hot, warm or cold and shows the reasons.</li>
+      <li>Duplicate detection across every form on the site, so the same customer isn’t worked twice.</li>
+      <li>Claiming and assignment, quotes, and orders with shipping-label purchase.</li>
+      <li>A follow-up queue fed by a daily job that flags who is due.</li>
+      <li>An activity timeline for each customer, an audit log, reports and CSV export, across 15 screens.</li>
+    </ul>
+
+    <h2 id="store">the store</h2>
+    <p>Stripe Checkout takes card and ACH payments, and Stripe Tax handles North Carolina sales tax. Shippo quotes live rates and buys the cheapest label across UPS and USPS. When Stripe confirms a payment, a webhook marks the order paid and the label flow begins. Staff can mark products out of stock from the CMS.</p>
+
+    <h2 id="cms">the cms</h2>
+    <p>Payload 3 runs inside the same Next.js app and database as the site. Every page is editable: 10 collections and 23 page types, with drafts, version history, live preview and block-based layouts. The navigation is edited there too.</p>
+
+    <h2 id="agents">ai agents</h2>
+    <p>Every form, checkout and Command Center action is logged to an append-only events table, built from the start with fields reserved for agents: which agent acted, on which channel, and an ID that ties related events together. A daily job flags which customers are due for a follow-up. n8n agents, running on BarkClad’s own n8n server, read that customer’s history and context from the CRM and draft a personalized reply. The sales team reviews it and sends it.</p>
+    
+
+    <h2 id="hard">hard problems</h2>
+    <ul>
+      <li>Merging two sites without losing search rankings. I inventoried 253 old URLs from WordPress and Wix, built a 167-row redirect map and hard-coded 149 redirects, including old numeric WordPress post links handled in middleware. An automated test checks them all. 45 blog posts were moved, and after launch 235 of the 237 URLs Google had indexed still resolved.</li>
+      <li>Adding editorial features to a live CMS. The team needed drafts, version history and live preview on a site that was already in production, and the CMS’s own migrate command was broken on the current Node version. I wrote a migration runner, rolled the changes out in a fixed order and checked all 94 pages against production with a visual regression run before switching them on. No page went blank.</li>
+      <li>One pipeline from five forms. Leads used to go to whoever answered the phone. Quote, quiz, contact, partner and sample forms now feed one CRM pipeline, with duplicate detection by email and phone across all of them, hot/warm/cold scoring with the reasons shown, and every lead saved and logged before any email or webhook fires.</li>
+    </ul>
 
     <h2 id="stack">stack</h2>
-    <p>Next.js, TypeScript, Tailwind and Payload CMS. Supabase. Stripe, Shippo and Resend. Vercel.</p>
+    <p>Next.js, TypeScript, Tailwind and Payload 3. Supabase (Postgres). Stripe Checkout and Stripe Tax, Shippo and Resend. GA4, Google Ads and Clarity with Consent Mode v2. reCAPTCHA. n8n. Vercel and Cloudflare DNS.</p>
   </article>
 
   <aside class="toc">
     <a class="visit" href="https://barkclad.com">visit site ↗</a>
     <a class="t" href="#ask">the ask</a>
     <a class="t" href="#build">what i built</a>
-    <a class="t" href="#seo">keeping search rankings</a>
+    <a class="t" href="#crm">the command center</a>
+    <a class="t" href="#store">the store</a>
+    <a class="t" href="#cms">the cms</a>
+    <a class="t" href="#agents">ai agents</a>
+    <a class="t" href="#hard">hard problems</a>
     <a class="t" href="#stack">stack</a>
   </aside>
 </div>

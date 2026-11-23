@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en" data-accent="blue">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Swift Flight LLC · Carson Turner</title>
+<link rel="icon" href="favicon.svg?v=6" type="image/svg+xml">
+<meta name="description" content="An Amazon business I founded and scaled to $700K+ in revenue. It started in online arbitrage, sourced with Python monitors that sent new competitor listings to Discord, then moved into distribution with companies primarily in health and wellness.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Swift Flight LLC · Carson Turner">
+<meta property="og:description" content="An Amazon business I founded and scaled to $700K+ in revenue. It started in online arbitrage, sourced with Python monitors that sent new competitor listings to Discord, then moved into distribution with companies primarily in health and wellness.">
+<meta property="og:url" content="https://carsonturner.me/swift-flight">
+<meta property="og:image" content="https://carsonturner.me/img/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav class="nav">
+  <a href="/#top">home</a>
+  <a href="/#work">work</a>
+  <a href="resume.pdf">resume</a>
+</nav>
+
+<div class="cs">
+  <a href="/#previously" class="back">← back</a>
+
+  <article>
+
+    <h1>Swift Flight LLC</h1>
+    <div class="date">founder · 2022–2025</div>
+    <p>An Amazon business I founded and scaled to $700K+ in revenue. It started in online arbitrage, sourced with Python monitors that sent new competitor listings to Discord, then moved into distribution with companies primarily in health and wellness.</p>
+
+    <h2 id="role">role</h2>
+    <p>Founder, November 2022 to April 2025, while a full-time student-athlete.</p>
+
+    <h2 id="business">the business</h2>
+    <p>Online arbitrage means finding products sold by other retailers for less than they sell for on Amazon, buying them, then prepping and shipping them into Amazon’s warehouses through Fulfillment by Amazon (FBA). Amazon stores and ships each order; the seller sets prices and manages inventory.</p>
+    <p>Later, the business moved from arbitrage into distribution: buying from and working with companies directly, primarily in health and wellness. Instead of hunting for one-off deals, it reordered products from brands it had accounts with.</p>
+
+    <h2 id="problem">problem</h2>
+    <p>Sourcing by hand meant checking competitor storefronts one at a time, so good products were found late or missed. The software replaced that work: it surfaced many more leads, and I could act on them faster.</p>
+
+    <h2 id="build">what i built</h2>
+    <ul>
+      <li>Monitors that watched a list of competitor storefronts for new listings.</li>
+      <li>Real-time alerts to Discord through webhooks.</li>
+      <li>Alerts that carried the product’s name, link and price, so a lead could be judged at a glance.</li>
+    </ul>
+
+    <h2 id="how">how it works</h2>
+    <p>Each monitor loaded its storefront’s listings on a short, fixed interval, compared them with the products it had already seen and posted only new ones to a Discord channel through a webhook. Requests were spaced out and retried on errors, and the monitors ran continuously on a small always-on server.</p>
+    <p>I wrote the monitors with ChatGPT’s help, an early use of AI-assisted development for me.</p>
+
+    <h2 id="results">results</h2>
+    <ul>
+      <li>Scaled the business to $700K+ in revenue.</li>
+      <li>Far more leads than manual sourcing ever found.</li>
+      <li>New listings acted on quickly, often before competitors.</li>
+    </ul>
+
+    <h2 id="stack">stack</h2>
+    <p>Python. An HTTP client and HTML parser. A small local database of seen products. Discord webhooks.</p>
+  </article>
+
+  <aside class="toc">
+    <a class="t" href="#role">role</a>
+    <a class="t" href="#business">the business</a>
+    <a class="t" href="#problem">problem</a>
+    <a class="t" href="#build">what i built</a>
+    <a class="t" href="#how">how it works</a>
+    <a class="t" href="#results">results</a>
+    <a class="t" href="#stack">stack</a>
+  </aside>
+</div>
+
+<script>
+const toc = [...document.querySelectorAll('.toc a.t')];
+const heads = toc.map(a => document.querySelector(a.getAttribute('href')));
+// Each section becomes active once its heading scrolls near the top. Headings near the end of a
+// short page can never get that far, so they share the last stretch of scrolling evenly instead.
+const spy = () => {
+  const max = document.documentElement.scrollHeight - innerHeight;
+  const at = heads.map(h => h.getBoundingClientRect().top + scrollY - 200);
+  const k = at.findIndex(t => t > max);
+  if (k > 0) {
+    const from = Math.max(0, at[k - 1]), n = at.length - k + 1;
+    for (let i = k; i < at.length; i++) at[i] = from + (max - from) * (i - k + 1) / n;
+  }
+  let cur = 0;
+  at.forEach((t, i) => { if (scrollY >= t - 1) cur = i; });
+  toc.forEach((a, i) => a.classList.toggle('on', i === cur));
+};
+addEventListener('scroll', spy, { passive: true });
+addEventListener('resize', spy);
+spy();
+</script>
+</body>
+</html>

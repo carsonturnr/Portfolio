@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Rapha · Carson Turner</title>
 <link rel="icon" href="favicon.svg?v=6" type="image/svg+xml">
-<meta name="description" content="An iOS app for young adults that builds a personalized 28-day devotional plan from their onboarding answers, with daily content, a faith chat and a daily-verse widget.">
+<meta name="description" content="An iPhone app that writes each user a personal Bible devotional plan for their life, struggles and faith background, and adapts it every month. Live on the App Store.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Rapha · Carson Turner">
-<meta property="og:description" content="An iOS app for young adults that builds a personalized 28-day devotional plan from their onboarding answers, with daily content, a faith chat and a daily-verse widget.">
-<meta property="og:url" content="https://carsonturner.me/rapha.html">
+<meta property="og:description" content="An iPhone app that writes each user a personal Bible devotional plan for their life, struggles and faith background, and adapts it every month. Live on the App Store.">
+<meta property="og:url" content="https://carsonturner.me/rapha">
 <meta property="og:image" content="https://carsonturner.me/img/og.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,45 +18,63 @@
 </head>
 <body>
 <nav class="nav">
-  <a href="index.html#top">home</a>
-  <a href="index.html#work" class="on">work</a>
-  <a href="index.html#clients">clients</a>
+  <a href="/#top">home</a>
+  <a href="/#work" class="on">work</a>
   <a href="resume.pdf">resume</a>
 </nav>
 
 <div class="cs">
-  <a href="index.html#work" class="back">← back</a>
+  <a href="/#work" class="back">← back</a>
 
   <article>
 
     <h1>Rapha</h1>
     <div class="date">iOS · 2025</div>
-    <p>An iOS app for young adults that builds a personalized 28-day devotional plan from their onboarding answers, with daily content, a faith chat and a daily-verse widget.</p>
+    <p>An iPhone app that writes each user a personal Bible devotional plan for their life, struggles and faith background, and adapts it every month. Live on the App Store.</p>
 
     <h2 id="problem">problem</h2>
-    <p>Generic devotionals rarely fit a person’s life stage, struggles or faith background, which makes a daily habit hard to keep.</p>
+    <p>Most devotional apps give everyone the same reading. People in a hard season, like grief, anxiety or a new job, have to hunt for passages that speak to them, and many drop the habit.</p>
 
     <h2 id="build">what i built</h2>
     <ul>
-      <li>A Claude pipeline that outlines the full 28-day plan in one call, then generates each week’s seven days in parallel.</li>
-      <li>A job queue inside Postgres: creating a plan queues the later weeks, and pg_cron runs them on schedule with retries.</li>
-      <li>A feedback loop where end-of-cycle ratings and preferences shape the next plan.</li>
-      <li>Context-aware prompts that draw on the user’s profile, the season and the liturgical calendar.</li>
-      <li>A SwiftUI app of about 150 views with a 15-question onboarding flow, Apple and Google sign-in, a paywall and a WidgetKit verse widget.</li>
+      <li>A Claude pipeline on Supabase Edge Functions that turns a short onboarding quiz into a 4-week plan. Each day has an intro, a Scripture passage, a lesson and a prayer.</li>
+      <li>Plans that adapt every month: near the end of a plan, a check-in asks one personal question, and that answer, the user’s favorites and how much they read shape the next plan.</li>
+      <li>A job queue inside Postgres: a trigger queues the later weeks and an hourly pg_cron job writes them, with retries. A retried job never overwrites a finished day.</li>
+      <li>A locked-down backend: every function verifies the caller’s JWT, and row-level security covers every table. It was tested with real attack attempts.</li>
+      <li>A SwiftUI app with a Bible reader, a Scripture-grounded chat, streaks, Apple and Google sign-in, a subscription paywall and a home-screen verse widget.</li>
     </ul>
 
     <h2 id="how">how it works</h2>
-    <p>The app calls a Supabase Edge Function rather than the model directly. One call returns the plan’s themes and all 28 day titles, so the month is planned as a whole. Day 1 is generated first and the rest of the week follows in the background with Day 1 as context. Later weeks see earlier verses and lesson excerpts so content doesn’t repeat, and the daily verse skips anything used in the last 60 days.</p>
+    <p>The app never calls the model directly: every AI request goes through an Edge Function that checks who is calling. Onboarding answers become a plan outline with a theme for each week, and each day is written from that outline, the user’s profile and what they have already read, so nothing repeats. At the end of a plan, the check-in answer, favorites and reading history feed the next one.</p>
+
+    <h2 id="hard">hard problems</h2>
+    <ul>
+      <li>Personal from the first second. A full plan takes many model calls and serverless functions have time limits, but a new user should start reading the moment onboarding ends. The first call writes the plan outline and Day 1 together and returns; the rest of the week is written after the response is sent, and later weeks are queued in Postgres and written by an hourly job with retries. Writes ignore duplicates, so a retried job never overwrites a finished day.</li>
+      <li>AI cost that scales with users. Every plan is long and personal, so cost per user matters. The week’s shared context goes in one cached prompt block, so each day’s call pays full price only for that day’s details. Every call has a token cap, chat has a per-user daily limit enforced on the server, and batch jobs are capped per run.</li>
+      <li>Scripture that can’t be misquoted. Models paraphrase, and a devotional app can’t. The model returns only verse references; the text comes from a Bible API, verse length is checked in code with a retry when it runs long, and replies are parsed against a strict schema so refusals are caught instead of shown.</li>
+      <li>Streaks and subscriptions that can’t be gamed. Streaks are rebuilt on the server from the list of completed days, accepting the device’s date only within a day of the server’s, so they can’t be faked or drift across time zones. Paid status is set only by a signed webhook from the paywall provider; the app itself can’t write it.</li>
+    </ul>
+
+    <h2 id="design">design details</h2>
+    <ul>
+      <li>A custom Metal shader draws the light-ray background, and particle effects pair with haptics; both step aside when Reduce Motion is on.</li>
+      <li>A home-screen widget shows the daily verse, sharing data with the app through an App Group and refreshing only when the verse changes.</li>
+      <li>The paywall is a React app served through Superwall, so it can be redesigned and tested without an App Store release.</li>
+      <li>Plans follow the season and the church calendar, not just the user’s answers.</li>
+    </ul>
 
     <h2 id="stack">stack</h2>
-    <p>Swift, SwiftUI and WidgetKit. Supabase (Postgres, Auth, Edge Functions in TypeScript, pg_cron, pg_net). Claude. Superwall.</p>
+    <p>Swift, SwiftUI and WidgetKit. Supabase (Postgres, Auth, Edge Functions in TypeScript, pg_cron, pg_net, Vault). Claude. Superwall.</p>
   </article>
 
   <aside class="toc">
-    <a class="visit" href="https://apps.apple.com/us/app/rapha-daily-devotional/id6756983504">app store ↗</a>
+    <a class="visit" href="https://getrapha.co">visit site ↗</a>
+    <a class="visit" href="https://apps.apple.com/us/app/rapha-daily-bible-devotional/id6756983504">app store ↗</a>
     <a class="t" href="#problem">problem</a>
     <a class="t" href="#build">what i built</a>
     <a class="t" href="#how">how it works</a>
+    <a class="t" href="#hard">hard problems</a>
+    <a class="t" href="#design">design details</a>
     <a class="t" href="#stack">stack</a>
   </aside>
 </div>

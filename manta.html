@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en" data-accent="blue">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Manta · Carson Turner</title>
+<link rel="icon" href="favicon.svg?v=6" type="image/svg+xml">
+<meta name="description" content="A live analytics terminal for prediction markets. It records Kalshi and Polymarket around the clock and turns the data into a screener of 5,000+ contracts, live order books, a side-by-side view of both venues and independent fair values.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Manta · Carson Turner">
+<meta property="og:description" content="A live analytics terminal for prediction markets. It records Kalshi and Polymarket around the clock and turns the data into a screener of 5,000+ contracts, live order books, a side-by-side view of both venues and independent fair values.">
+<meta property="og:url" content="https://carsonturner.me/manta">
+<meta property="og:image" content="https://carsonturner.me/img/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav class="nav">
+  <a href="/#top">home</a>
+  <a href="/#work" class="on">work</a>
+  <a href="resume.pdf">resume</a>
+</nav>
+
+<div class="cs">
+  <a href="/#work" class="back">← back</a>
+
+  <article>
+
+    <h1>Manta</h1>
+    <div class="date">web · 2026</div>
+    <p>A live analytics terminal for prediction markets. It records Kalshi and Polymarket around the clock and turns the data into a screener of 5,000+ contracts, live order books, a side-by-side view of both venues and independent fair values.</p>
+
+    <h2 id="problem">problem</h2>
+    <p>Traders on Kalshi and Polymarket have no single place to find contracts, see how much can actually be traded, compare the same event on both venues or check whether a price is fair. Kalshi doesn’t publish past order books, so its liquidity can’t be studied unless someone records it.</p>
+
+    <h2 id="build">what i built</h2>
+    <ul>
+      <li>A screener for every open crypto, economics and financial contract on both venues, filtered by venue, expiry, spread, volume, depth and distance from fair value.</li>
+      <li>Contract pages with the live order book, a price chart, the payoff in plain English and what buying or selling a given size costs after slippage and fees.</li>
+      <li>Fair values labelled by method: Bitcoin and Ether priced from Deribit’s options market, everything else from one curve fitted to both venues’ order books.</li>
+      <li>A cross-venue view of the same event on both venues that flags price gaps still worth taking after fees.</li>
+      <li>Minute-by-minute replay of past Kalshi order books, rebuilt from the recordings.</li>
+      <li>An accuracy page that scores market prices and Manta’s fair values against settled outcomes, plus watchlists and email alerts.</li>
+    </ul>
+    <h2 id="how">how it works</h2>
+    <p>A recorder written in Go streams order books and trades from six venues (Kalshi, Polymarket, Deribit, Coinbase, Kraken and Binance) into hourly files on a small server, written so a crash loses at most a second. Every minute, Python jobs list contracts, compute fair values and check alerts, and write the results to Postgres. The Next.js site reads straight from that database. All the pricing math is written by hand.</p>
+
+    <h2 id="numbers">by the numbers</h2>
+    <ul>
+      <li>2.38 billion messages recorded from six venues in ten days, with over 99% coverage on each</li>
+      <li>Over one rebuilt hour of 26.4 million updates, the order book matched Kalshi’s own snapshots in all 16,630 checks</li>
+      <li>On 206 settled Bitcoin contracts, the fair value was as accurate as Kalshi’s own price an hour before close (Brier score 0.112 vs 0.114)</li>
+      <li>5,069 contracts in the screener, 3,640 with a fair value</li>
+    </ul>
+
+    <h2 id="stack">stack</h2>
+    <p>Go, Python and TypeScript. Next.js and React on Vercel. Postgres on Supabase. A Hetzner server running systemd services. NautilusTrader for backtest data.</p>
+  </article>
+
+  <aside class="toc">
+    <a class="visit" href="https://mantamarkets.com">visit site ↗</a>
+    <a class="t" href="#problem">problem</a>
+    <a class="t" href="#build">what i built</a>
+    <a class="t" href="#how">how it works</a>
+    <a class="t" href="#numbers">by the numbers</a>
+    <a class="t" href="#stack">stack</a>
+  </aside>
+</div>
+
+<script>
+const toc = [...document.querySelectorAll('.toc a.t')];
+const heads = toc.map(a => document.querySelector(a.getAttribute('href')));
+// Each section becomes active once its heading scrolls near the top. Headings near the end of a
+// short page can never get that far, so they share the last stretch of scrolling evenly instead.
+const spy = () => {
+  const max = document.documentElement.scrollHeight - innerHeight;
+  const at = heads.map(h => h.getBoundingClientRect().top + scrollY - 200);
+  const k = at.findIndex(t => t > max);
+  if (k > 0) {
+    const from = Math.max(0, at[k - 1]), n = at.length - k + 1;
+    for (let i = k; i < at.length; i++) at[i] = from + (max - from) * (i - k + 1) / n;
+  }
+  let cur = 0;
+  at.forEach((t, i) => { if (scrollY >= t - 1) cur = i; });
+  toc.forEach((a, i) => a.classList.toggle('on', i === cur));
+};
+addEventListener('scroll', spy, { passive: true });
+addEventListener('resize', spy);
+spy();
+</script>
+</body>
+</html>

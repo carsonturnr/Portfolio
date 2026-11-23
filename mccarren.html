@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en" data-accent="blue">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>McCarren Capital · Carson Turner</title>
+<link rel="icon" href="favicon.svg?v=6" type="image/svg+xml">
+<meta name="description" content="Software engineer at McCarren Capital, a private-equity and specialty-finance advisory. I built custom CRM automation on Attio and OpenAI that turned cold investor outreach into booked calls.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="McCarren Capital · Carson Turner">
+<meta property="og:description" content="Software engineer at McCarren Capital, a private-equity and specialty-finance advisory. I built custom CRM automation on Attio and OpenAI that turned cold investor outreach into booked calls.">
+<meta property="og:url" content="https://carsonturner.me/mccarren">
+<meta property="og:image" content="https://carsonturner.me/img/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav class="nav">
+  <a href="/#top">home</a>
+  <a href="/#work">work</a>
+  <a href="resume.pdf">resume</a>
+</nav>
+
+<div class="cs">
+  <a href="/#previously" class="back">← back</a>
+
+  <article>
+
+    <h1>McCarren Capital</h1>
+    <div class="date">software engineer · 2025</div>
+    <p>Software engineer at McCarren Capital, a private-equity and specialty-finance advisory. I built custom CRM automation on Attio and OpenAI that turned cold investor outreach into booked calls.</p>
+
+    <h2 id="ask">the ask</h2>
+    <p>Investor outreach was chased by hand. Follow-ups slipped when the inbox got busy, replies waited, and the pipeline only stayed current if someone updated it manually.</p>
+
+    <h2 id="role">role</h2>
+    <p>Software Engineer, remote, April 2025 to January 2026.</p>
+
+    <h2 id="build">what i built</h2>
+    <ul>
+      <li>Automatic follow-ups, sent a set time after each touchpoint with an investor.</li>
+      <li>Pipeline stages in Attio that contacts moved through on their own: new, contacted, replied, call booked.</li>
+      <li>Timing rules for each stage, so the wait before the next follow-up depended on where the investor stood.</li>
+      <li>Reply sorting into interested, not now and not interested, which decided the next step.</li>
+      <li>Responses generated with OpenAI from the email thread and the investor’s Attio record.</li>
+      <li>A stop on all automation for an investor once they replied or booked a call.</li>
+    </ul>
+
+    <h2 id="how">how it works</h2>
+    <p>An investor is added to Attio and starts in the first stage. The outreach sequence goes out through SuperSend, with each follow-up timed from the last touchpoint. When the investor replies, the reply is sorted, and OpenAI generates a response from the thread and their Attio record, which a person checks before it is sent. Each step updates the investor’s stage through Attio’s API, and the sequence ends once a call is booked.</p>
+
+    <h2 id="choices">design choices</h2>
+    <ul>
+      <li>A person stayed in the loop on replies. In finance, every message to an investor carries the firm’s name.</li>
+      <li>Sending windows and daily limits protected the domain’s sending reputation.</li>
+      <li>Attio was the single source of truth: every send, reply and stage change was written back to it.</li>
+    </ul>
+
+    <h2 id="results">results</h2>
+    <ul>
+      <li>Cold investor outreach turned into booked calls.</li>
+      <li>No more missed follow-ups.</li>
+      <li>Investor replies answered faster.</li>
+      <li>More time on calls instead of chasing follow-ups.</li>
+      <li>A pipeline that was always current.</li>
+    </ul>
+
+    <h2 id="stack">stack</h2>
+    <p>Python. Attio API. SuperSend. OpenAI API.</p>
+  </article>
+
+  <aside class="toc">
+    <a class="visit" href="https://mccarrencapital.com">visit site ↗</a>
+    <a class="t" href="#ask">the ask</a>
+    <a class="t" href="#role">role</a>
+    <a class="t" href="#build">what i built</a>
+    <a class="t" href="#how">how it works</a>
+    <a class="t" href="#choices">design choices</a>
+    <a class="t" href="#results">results</a>
+    <a class="t" href="#stack">stack</a>
+  </aside>
+</div>
+
+<script>
+const toc = [...document.querySelectorAll('.toc a.t')];
+const heads = toc.map(a => document.querySelector(a.getAttribute('href')));
+// Each section becomes active once its heading scrolls near the top. Headings near the end of a
+// short page can never get that far, so they share the last stretch of scrolling evenly instead.
+const spy = () => {
+  const max = document.documentElement.scrollHeight - innerHeight;
+  const at = heads.map(h => h.getBoundingClientRect().top + scrollY - 200);
+  const k = at.findIndex(t => t > max);
+  if (k > 0) {
+    const from = Math.max(0, at[k - 1]), n = at.length - k + 1;
+    for (let i = k; i < at.length; i++) at[i] = from + (max - from) * (i - k + 1) / n;
+  }
+  let cur = 0;
+  at.forEach((t, i) => { if (scrollY >= t - 1) cur = i; });
+  toc.forEach((a, i) => a.classList.toggle('on', i === cur));
+};
+addEventListener('scroll', spy, { passive: true });
+addEventListener('resize', spy);
+spy();
+</script>
+</body>
+</html>
